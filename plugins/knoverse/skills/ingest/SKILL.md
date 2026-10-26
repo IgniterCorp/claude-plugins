@@ -9,8 +9,8 @@ description: "PDF 경로 하나를 받아 노버스에 **끝까지** 넣는다 �
 > 결정적인 연쇄를 프롬프트로 옮겨 적으면 두 벌이 되고 한쪽만 낡는다.
 
 ```bash
-node "$(dirname "$(find "${FLEET_ROOT:-$(git rev-parse --show-toplevel)}" \
-  -path '*/plugins/knoverse/scripts/ingest.mjs' | head -1)")/ingest.mjs" --pdf <경로>
+# <스킬 폴더> = 이 스킬이 로드될 때 맨 위에 찍히는 "Base directory"
+node "<스킬 폴더>/../../scripts/ingest.mjs" --pdf <경로>
 ```
 
 인자 — `--pdf <경로>` · `--title` · `--space` · `--item <id>`(이어받기) · `--dry-run` · `--only <단계>`

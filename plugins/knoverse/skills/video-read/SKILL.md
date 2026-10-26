@@ -1,7 +1,7 @@
 ---
 name: video-read
 description: "영상(유튜브·jwplayer·mp4)을 노버스 서재에 '쪽이 있는 책'으로 넣고 원문 → 교정본 → 한국어 번역 → 주제 목차 → 독후감까지 만든다. 장면 캡처 + 자막(없으면 로컬 STT)을 구간별 쪽으로 올리는 것은 scripts/video-ingest.mjs, 그다음은 노버스 MCP. \"영상 정리\", \"영상 요약\", \"이 영상 서재에\", \"영상 번역\", \"영상 독후감\", \"video read\", \"강연 정리\" 에 반응."
-argument-hint: "<영상 URL 또는 mp4 경로> [--space <스페이스>]"
+argument-hint: "<영상 URL 또는 mp4 경로> [--item <항목 id>] [--space <스페이스>]"
 ---
 
 # video-read — 영상을 서재에 넣고 책처럼 정리
@@ -24,10 +24,11 @@ python3 -c "import mlx_whisper"    # 맥. 아니면: python3 -c "import faster_w
 ## 1. 쪽으로 넣기 — 스크립트
 
 ```bash
-node "$(dirname "$(find "${FLEET_ROOT:-$(git rev-parse --show-toplevel)}" \
-  -path '*/plugins/knoverse/scripts/video-ingest.mjs' | head -1)")/video-ingest.mjs" --url "<URL>" [--space "<스페이스 이름>"] [--dry-run]
+# <스킬 폴더> = 이 스킬이 로드될 때 맨 위에 찍히는 "Base directory" (플러그인 설치 위치는 사람마다 다르다)
+node "<스킬 폴더>/../../scripts/video-ingest.mjs" --url "<URL>" [--item <항목 id>] [--space "<스페이스 이름>"] [--dry-run]
 ```
 
+- `--item` 이 있으면 **그 항목에** 올린다 — 콘솔에서 영상 항목을 먼저 만들고 「원문」 탭의 명령을 붙여 넣은 경우다. 없으면 새 항목을 만든다
 - `--dry-run` 이면 받고·STT·장면까지 하고 올리지 않는다. 쪽 수와 빈 쪽 수를 먼저 보여 준다
 - 끝나면 `itemId` 를 출력한다. 중단돼도 같은 명령을 다시 돌리면 이어간다(작업 폴더의 `state.json`)
 - 강의처럼 장면이 드문 영상은 쪽이 길어진다 → `--max-sec 120`. 인터뷰처럼 컷이 잦으면 `--min-sec 60`
