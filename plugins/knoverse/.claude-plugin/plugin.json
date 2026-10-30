@@ -1,6 +1,6 @@
 {
   "name": "knoverse",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "노버스 서재에 책·영상을 넣고 장별 요약·발표자료·독후감을 만든다. 생성은 이 세션이, 저장은 노버스가.",
   "author": {
     "name": "IgniterCorp",
